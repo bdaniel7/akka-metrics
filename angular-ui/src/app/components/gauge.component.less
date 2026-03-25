@@ -1,0 +1,47 @@
+@import (reference) '../../styles/theme';
+
+.gauge-wrap {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  gap:             4px;
+}
+
+.gauge-svg-wrap {
+  position: relative;
+}
+
+.gauge-svg {
+  // Rotated so arc starts bottom-left
+  transform: rotate(-135deg);
+}
+
+// SVG arc transition is inline on the element (needed for Safari compat with stroke-dashoffset)
+
+.gauge-center {
+  position:        absolute;
+  inset:           0;
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+}
+
+.gauge-value {
+  font-family:  @font-mono;
+  font-weight:  700;
+  color:        @color-text-primary;
+  line-height:  1;
+}
+
+.gauge-pct {
+  color: @color-text-muted;
+}
+
+.gauge-label {
+  font-family:    @font-mono;
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

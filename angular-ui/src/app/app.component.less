@@ -1,0 +1,159 @@
+@import (reference) '../styles/theme';
+
+.page {
+  min-height: 100vh;
+  background: @color-page-bg;
+}
+
+.main {
+  max-width: @max-width;
+  margin:    0 auto;
+  padding:   @space-xl 24px;
+}
+
+// ── Stat bar ─────────────────────────────────────────────────────────────────
+.stats-grid {
+  display:               grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:                   14px;
+  margin-bottom:         24px;
+}
+
+.stat {
+  background:    @color-surface;
+  border:        1px solid @color-border;
+  border-radius: @radius-lg;
+  padding:       @space-lg 22px;
+  box-shadow:    @shadow-stat;
+}
+
+.stat-label {
+  font-family:    @font-mono;
+  font-size:      10px;
+  font-weight:    600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color:          @color-text-muted;
+  margin-bottom:  6px;
+}
+
+.stat-value {
+  font-family: @font-mono;
+  font-size:   28px;
+  font-weight: 700;
+  color:       @color-text-primary;
+
+  &-accent { color: @color-accent; }
+  &-ram    { color: @color-ram; }
+}
+
+// ── Node grid ─────────────────────────────────────────────────────────────────
+.node-grid {
+  display:               grid;
+  grid-template-columns: repeat(auto-fill, minmax(@card-min-width, 1fr));
+  gap:                   18px;
+}
+
+// ── Empty state ───────────────────────────────────────────────────────────────
+.empty {
+  display:         flex;
+  flex-direction:  column;
+  align-items:     center;
+  justify-content: center;
+  padding:         80px 0;
+  gap:             @space-lg;
+}
+
+.empty-icon-ring {
+  width:         72px;
+  height:        72px;
+  border-radius: 50%;
+  background:    @color-idle-badge-bg;
+  border:        2px solid @color-border;
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+}
+
+.empty-title {
+  font-size:   20px;
+  font-weight: 700;
+  color:       @color-text-primary;
+  margin-bottom: 6px;
+}
+
+.empty-subtitle {
+  font-size: 14px;
+  color:     @color-text-body;
+}
+
+.empty-box {
+  background:    @color-surface;
+  border:        1px solid @color-border;
+  border-radius: @radius-lg;
+  padding:       24px 28px;
+  max-width:     520px;
+  width:         100%;
+  box-shadow:    @shadow-stat;
+}
+
+.qs-title {
+  font-family:    @font-mono;
+  font-size:      11px;
+  font-weight:    700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color:          @color-accent;
+  margin-bottom:  14px;
+}
+
+.qs-steps {
+  font-size:   14px;
+  color:       @color-text-body;
+  line-height: 2;
+
+  code {
+    font-family:   @font-mono;
+    font-size:     12px;
+    background:    @color-idle-badge-bg;
+    padding:       1px 6px;
+    border-radius: 4px;
+    color:         darken(@color-brand, 10%);
+  }
+}
+
+.qs-codebox {
+  font-family:   @font-mono;
+  font-size:     11px;
+  background:    @color-idle-badge-bg;
+  border:        1px solid @color-border;
+  border-radius: @radius-sm;
+  padding:       10px 14px;
+  color:         @color-text-primary;
+  margin:        4px 0 8px;
+}
+
+// ── Footer ────────────────────────────────────────────────────────────────────
+.app-footer {
+  text-align:  center;
+  padding:     @space-lg;
+  border-top:  1px solid @color-border;
+}
+
+.footer-text {
+  font-family: @font-mono;
+  font-size:   11px;
+  color:       @color-text-faint;
+}
+
+// ── Empty state layout helpers ────────────────────────────────────────────────
+.empty-icon-pos    { position: relative; }
+.empty-pulse-ring  {
+  position:      absolute;
+  inset:         0;
+  border-radius: 50%;
+  border:        2px solid fade(@color-accent, 30%);
+  animation:     pulse 2s ease-in-out infinite;
+}
+.empty-text-center { text-align: center; }
+.qs-cta            { color: @color-accent; }

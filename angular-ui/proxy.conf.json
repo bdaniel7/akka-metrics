@@ -1,0 +1,13 @@
+{
+  "/hubs": {
+    "target": "http://localhost:5000",
+    "secure": false,
+    "ws": true,
+    "logLevel": "debug"
+  },
+  "/api": {
+    "target": "http://localhost:5000",
+    "secure": false,
+    "changeOrigin": true
+  }
+}

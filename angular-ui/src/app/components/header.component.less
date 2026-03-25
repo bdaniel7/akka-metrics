@@ -1,0 +1,106 @@
+@import (reference) '../../styles/theme';
+
+header {
+  background:    @color-header-bg;
+  border-bottom: 1px solid @color-header-border;
+  position:      sticky;
+  top:           0;
+  z-index:       @z-header;
+}
+
+.inner {
+  max-width:       @max-width;
+  margin:          0 auto;
+  padding:         0 24px;
+  height:          @header-height;
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+}
+
+// Brand
+.brand-name {
+  font-family:    @font-mono;
+  font-size:      16px;
+  font-weight:    700;
+  letter-spacing: 0.12em;
+  color:          @color-text-on-dark;
+}
+
+.brand-sub {
+  font-family:    @font-mono;
+  font-size:      9px;
+  letter-spacing: 0.25em;
+  color:          @color-idle-badge-text;
+  margin-top:     -1px;
+}
+
+// Status pills
+.pill {
+  display:       flex;
+  align-items:   center;
+  gap:           7px;
+  padding:       6px 16px;
+  border-radius: @radius-pill;
+  background:    @color-header-pill-bg;
+  border:        1px solid @color-header-border;
+  font-family:   @font-mono;
+  font-size:     12px;
+}
+
+.dot {
+  width:         8px;
+  height:        8px;
+  border-radius: 50%;
+  flex-shrink:   0;
+}
+
+.clock {
+  font-family:    @font-mono;
+  font-size:      14px;
+  color:          @color-text-muted;
+  letter-spacing: 0.05em;
+}
+
+// ── Brand icon ────────────────────────────────────────────────────────────────
+.brand-icon-wrap {
+  display:         flex;
+  align-items:     center;
+  gap:             12px;
+}
+
+.brand-icon {
+  width:           40px;
+  height:          40px;
+  border-radius:   10px;
+  background:      @color-brand;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  position:        relative;
+  flex-shrink:     0;
+}
+
+.brand-live-dot {
+  position:      absolute;
+  top:           -2px;
+  right:         -2px;
+  background:    @color-accent;
+  border:        2px solid @color-header-bg;
+}
+
+// ── Pills row ─────────────────────────────────────────────────────────────────
+.pills {
+  display: flex;
+  gap:     8px;
+}
+
+.pill-node-count  { color: @color-text-on-dark; font-weight: 700; }
+.pill-nodes-label { color: @color-idle-badge-text; }
+.pill-live-count  { color: @color-accent; font-weight: 700; }
+.pill-live-label  { color: @color-idle-badge-text; }
+.pill-conn-label  { font-weight: 600; }
+
+// SVG icon colours (used as currentColor on SVG stroke)
+.icon-nodes { color: @color-idle-badge-text; }
+.icon-live  { color: @color-accent; }

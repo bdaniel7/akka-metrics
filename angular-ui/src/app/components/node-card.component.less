@@ -1,0 +1,262 @@
+@import (reference) '../../styles/theme';
+
+:host { display: block; }
+
+// ── Card shell ────────────────────────────────────────────────────────────────
+.card {
+  background:    @color-surface;
+  border:        1px solid @color-border;
+  border-radius: @radius-xl;
+  overflow:      hidden;
+  box-shadow:    @shadow-card;
+  transition:    box-shadow @transition-std, border-color @transition-std;
+
+  &.live {
+    border-color: @color-accent;
+    box-shadow:   @shadow-card-live;
+  }
+}
+
+.top-bar {
+  height: 4px;
+  width:  100%;
+}
+
+.card-body {
+  padding: @space-lg;
+}
+
+// ── Header row ────────────────────────────────────────────────────────────────
+.card-header {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     flex-start;
+  margin-bottom:   18px;
+  gap:             @space-sm;
+}
+
+.hostname {
+  font-size:      15px;
+  font-weight:    700;
+  color:          @color-text-primary;
+  overflow:       hidden;
+  text-overflow:  ellipsis;
+  white-space:    nowrap;
+}
+
+.nodeid {
+  font-family:  @font-mono;
+  font-size:    11px;
+  color:        @color-text-muted;
+  margin-top:   1px;
+  padding-left: 17px;
+}
+
+.status-dot {
+  width:         9px;
+  height:        9px;
+  border-radius: 50%;
+  flex-shrink:   0;
+}
+
+// Badge
+.badge {
+  padding:       3px 10px;
+  border-radius: @radius-pill;
+  font-family:   @font-mono;
+  font-size:     10px;
+  letter-spacing:0.08em;
+  white-space:   nowrap;
+
+  &-live {
+    background: @color-accent-bg;
+    color:      @color-accent-text;
+    border:     1px solid @color-accent-border;
+    font-weight:700;
+  }
+  &-idle {
+    background: @color-idle-badge-bg;
+    color:      @color-idle-badge-text;
+    border:     1px solid @color-border;
+  }
+}
+
+// ── Gauges ────────────────────────────────────────────────────────────────────
+.gauges {
+  display:         flex;
+  justify-content: space-around;
+  margin-bottom:   18px;
+}
+
+// ── Section (raised inner panel) ─────────────────────────────────────────────
+.section {
+  background:    @color-surface-raised;
+  border:        1px solid @color-border;
+  border-radius: @radius-md;
+  padding:       @space-md;
+  margin-bottom: 14px;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.section-label {
+  font-family:    @font-mono;
+  font-size:      9px;
+  font-weight:    600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color:          @color-text-muted;
+  margin-bottom:  @space-sm;
+}
+
+// ── RAM bar ───────────────────────────────────────────────────────────────────
+.ram-label {
+  font-size: 12px;
+  color:     @color-text-body;
+}
+
+.ram-value {
+  font-family: @font-mono;
+  font-size:   12px;
+  font-weight: 600;
+  color:       @color-text-primary;
+}
+
+.ram-track {
+  height:        8px;
+  background:    @color-border;
+  border-radius: 4px;
+  overflow:      hidden;
+  margin-top:    6px;
+}
+
+.ram-fill {
+  height:        100%;
+  border-radius: 4px;
+  transition:    width @transition-slow;
+  background:    @color-ram-gradient;
+}
+
+// ── Sparkline grid ────────────────────────────────────────────────────────────
+.sparkline-grid {
+  display:               grid;
+  grid-template-columns: 1fr 1fr;
+  gap:                   10px;
+  margin-bottom:         16px;
+}
+
+// ── Control panel ─────────────────────────────────────────────────────────────
+.url-input {
+  width:        100%;
+  padding:      8px 12px;
+  border-radius:@radius-sm;
+  border:       1px solid @color-border-input;
+  font-family:  @font-mono;
+  font-size:    11px;
+  color:        @color-text-primary;
+  background:   @color-surface;
+  outline:      none;
+  margin-bottom:10px;
+  transition:   border-color @transition-fast, box-shadow @transition-fast;
+
+  &:focus {
+    border-color: @color-brand;
+    box-shadow:   0 0 0 3px @color-brand-focus;
+  }
+}
+
+.ctrl-row {
+  display:     flex;
+  align-items: center;
+  gap:         @space-sm;
+}
+
+// ── Buttons ───────────────────────────────────────────────────────────────────
+.btn {
+  padding:       8px 18px;
+  border-radius: @radius-sm;
+  font-family:   @font-mono;
+  font-size:     12px;
+  font-weight:   700;
+  cursor:        pointer;
+  border:        none;
+  transition:    all @transition-fast;
+  display:       flex;
+  align-items:   center;
+  gap:           6px;
+  white-space:   nowrap;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor:  not-allowed;
+  }
+
+  &-go {
+    background: @color-accent;
+    color:      #fff;
+    &:hover:not(:disabled) { background: @color-accent-dark; }
+  }
+
+  &-stop {
+    background: @color-stop;
+    color:      #fff;
+    &:hover:not(:disabled) { background: @color-stop-dark; }
+  }
+}
+
+// ── Spinner ───────────────────────────────────────────────────────────────────
+.spinner {
+  width:        12px;
+  height:       12px;
+  border:       2px solid currentColor;
+  border-top-color: transparent;
+  border-radius:50%;
+  animation:    spin 0.7s linear infinite;
+}
+
+// ── Feedback ─────────────────────────────────────────────────────────────────
+.feedback {
+  font-family: @font-mono;
+  font-size:   11px;
+  flex:        1;
+
+  &-ok  { color: @color-ok; }
+  &-err { color: @color-err; }
+}
+
+// ── Footer row ────────────────────────────────────────────────────────────────
+.card-footer {
+  margin-top:      12px;
+  display:         flex;
+  justify-content: space-between;
+}
+
+.footer-text {
+  font-family:   @font-mono;
+  font-size:     10px;
+  color:         @color-text-faint;
+  overflow:      hidden;
+  text-overflow: ellipsis;
+  white-space:   nowrap;
+}
+
+// ── Card inner layout helpers ─────────────────────────────────────────────────
+.card-header-left { min-width: 0; }
+
+.hostname-row {
+  display:       flex;
+  align-items:   center;
+  gap:           8px;
+  margin-bottom: 3px;
+}
+
+.ram-row {
+  display:         flex;
+  justify-content: space-between;
+  align-items:     center;
+}
+
+.sparkline-label-cpu { color: @color-cpu-normal; }
+.sparkline-label-ram { color: @color-brand; }
+
+.footer-text-addr { max-width: 60%; }
