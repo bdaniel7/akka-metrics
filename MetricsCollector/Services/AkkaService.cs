@@ -25,7 +25,7 @@ namespace AkkaMetrics.Collector.Services
             var nodeId = config["Akka:NodeId"] ?? $"node-{Environment.MachineName}";
             var collectorPort = int.Parse(config["Akka:Port"] ?? "8081");
             var hubAddress = config["Akka:HubAddress"]
-                ?? "akka.tcp://MetricsHub@0.0.0.0:9080/user/metrics-hub";
+                ?? "akka.tcp://MetricsHub@10.0.0.42:9080/user/metrics-hub";
 
             var akkaConfig = ConfigurationFactory.ParseString($@"
                 akka {{

@@ -1,7 +1,20 @@
 version: '3.9'
 
 services:
-  # ── Central Hub ──────────────────────────────────────────────────────────────
+  seq:
+    image: datalust/seq:latest
+    container_name: syswatch-seq
+    ports:
+      - "8080:80"        # Web UI at http://localhost:8080
+      - "5341:5341"      # Ingestion endpoint
+    environment:
+      - ACCEPT_EULA=Y
+    volumes:
+      - seq-data:/data
+    networks:
+      - metrics-net
+    restart: unless-stopped
+
   metrics-hub:
     build:
       context: .
@@ -15,11 +28,14 @@ services:
       - Akka__Hostname=0.0.0.0
       - Akka__PublicHostname=metrics-hub
       - Kestrel__Endpoints__Http__Url=http://0.0.0.0:5000
+      - Seq__Endpoint=http://seq:8080
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://seq:5341/ingest/otlp
+    depends_on:
+      - seq
     networks:
       - metrics-net
     restart: unless-stopped
 
-  # ── Angular UI ────────────────────────────────────────────────────────────────
   metrics-ui:
     build:
       context: ./angular-ui
@@ -33,7 +49,6 @@ services:
       - metrics-net
     restart: unless-stopped
 
-  # ── Example Collector Node 1 ─────────────────────────────────────────────────
   collector-node1:
     build:
       context: .
@@ -48,13 +63,15 @@ services:
       - Akka__PublicHostname=collector-node1
       - Akka__HubAddress=akka.tcp://MetricsHub@metrics-hub:9080/user/metrics-hub
       - Kestrel__Endpoints__Http__Url=http://0.0.0.0:5001
+      - Seq__Endpoint=http://seq:8080
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://seq:5341/ingest/otlp
     depends_on:
       - metrics-hub
+      - seq
     networks:
       - metrics-net
     restart: unless-stopped
 
-  # ── Example Collector Node 2 ─────────────────────────────────────────────────
   collector-node2:
     build:
       context: .
@@ -69,8 +86,11 @@ services:
       - Akka__PublicHostname=collector-node2
       - Akka__HubAddress=akka.tcp://MetricsHub@metrics-hub:9080/user/metrics-hub
       - Kestrel__Endpoints__Http__Url=http://0.0.0.0:5001
+      - Seq__Endpoint=http://seq:8080
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://seq:5341/ingest/otlp
     depends_on:
       - metrics-hub
+      - seq
     networks:
       - metrics-net
     restart: unless-stopped
@@ -78,3 +98,6 @@ services:
 networks:
   metrics-net:
     driver: bridge
+
+volumes:
+  seq-data:

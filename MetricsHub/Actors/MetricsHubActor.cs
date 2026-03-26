@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Akka.Actor;
 using Akka.Event;
 using AkkaMetrics.Hub.Hubs;
@@ -14,6 +15,7 @@ namespace AkkaMetrics.Hub.Actors
     {
         private readonly ILoggingAdapter log = Context.GetLogger();
         private readonly IHubContext<MetricsSignalRHub> signalRHub;
+        private static readonly ActivitySource ActivitySource = new("AkkaMetrics.Hub");
 
         // Track connected collector nodes
         private readonly Dictionary<string, NodeInfo> connectedNodes = new();
@@ -34,7 +36,11 @@ namespace AkkaMetrics.Hub.Actors
 
         private void handleRegister(RegisterCollector msg)
         {
+            using var activity = ActivitySource.StartActivity("RegisterCollector", ActivityKind.Server);
             var remoteAddress = Sender.Path.Address.ToString();
+            activity?.SetTag("node.id", msg.NodeId);
+            activity?.SetTag("hostname", msg.Hostname);
+            activity?.SetTag("remote.address", remoteAddress);
             log.Info("Node '{NodeId}' ({Hostname}) connected from {Remote}", 
                 msg.NodeId, msg.Hostname, remoteAddress);
 
@@ -59,6 +65,8 @@ namespace AkkaMetrics.Hub.Actors
             });
 
             _ = broadcastNodeList();
+            activity?.SetTag("total.nodes", connectedNodes.Count);
+            activity?.SetStatus(ActivityStatusCode.Ok);
         }
 
         private void handleUnregister(UnregisterCollector msg)
@@ -79,7 +87,13 @@ namespace AkkaMetrics.Hub.Actors
 
         private void handlePushMetrics(PushMetrics msg)
         {
+            using var activity = ActivitySource.StartActivity("ProcessMetrics", ActivityKind.Internal);
             var snapshot = msg.Snapshot;
+            
+            activity?.SetTag("node.id", snapshot.NodeId);
+            activity?.SetTag("cpu.percent", snapshot.CpuPercent);
+            activity?.SetTag("ram.percent", snapshot.RamPercent);
+            activity?.SetTag("connected.nodes", connectedNodes.Count);
             latestSnapshots[snapshot.NodeId] = snapshot;
 
             log.Debug("[{NodeId}] CPU={Cpu:F1}% RAM={Ram:F0}MB/{Total:F0}MB",
@@ -96,6 +110,7 @@ namespace AkkaMetrics.Hub.Actors
                 ramPercent = Math.Round(snapshot.RamPercent, 2),
                 timestamp = snapshot.Timestamp.ToString("O")
             });
+            activity?.SetStatus(ActivityStatusCode.Ok);
         }
 
         private void handleGetNodes()

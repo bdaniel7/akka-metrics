@@ -14,9 +14,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker", "docker", "{E50C99
 		docker-compose.yml = docker-compose.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stuff", "stuff", "{0C32D767-0CBC-4337-B2AE-2FA02CD70F63}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{0C32D767-0CBC-4337-B2AE-2FA02CD70F63}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
+		OBSERVABILITY.md = OBSERVABILITY.md
 	EndProjectSection
 EndProject
 Global
